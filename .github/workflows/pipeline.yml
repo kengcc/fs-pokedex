@@ -33,6 +33,13 @@ jobs:
       - name: Build project
         run: npm run build
 
+  simple_deployment_pipeline:
+    needs: [build_and_test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm validation completed
+        run: echo "build_and_test completed successfully"
+
   deploy:
     needs: [build_and_test]
     if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
